@@ -1,0 +1,105 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Music</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Oases">
+  <meta name="description" content="">
+  <link rel="icon" href="images/music_icon.png" />
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="stylesheets/style.css"/>
+
+
+  
+   <!-- Vuejs -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.10.6/vue.min.js"></script>
+  <script src="js/v-plangular.min.js"></script>
+
+  <!-- Vuejs version -->
+  <script src="http://d2v52k3cl9vedd.cloudfront.net/plangular/2.0-beta-1/v-plangular.min.js"></script>
+
+  <script src="js/bike.js"></script>
+
+</head>
+<body id="vm" class="theme-dark-blue">
+ 
+  <header class="table full-height center transition-bg  bg-darken-3">
+  <div class= "relative table-cell py4">
+        <div class="px2">
+            <h1 class=" vhs-flicker-in">
+            Oases
+            <small class="inline-block vhs-flicker-in vhs-delay-3">list</small>
+            </h1>
+            <p class="vhs-fade-in vhs-delay-4"> SoundCloud players</p>
+          <div class="m2 vhs-zoom-in vhs-delay-2">
+              <button class="button">SCROLL DOWN</button>
+
+          </div>    
+      </div>
+    </div>
+  </header>
+
+  <section id="examples" class=" container px2 py4 full-height">
+      <div class="bg-darken-3 rounded" v-component="plangular" v-src="'https://soundcloud.com/oases-ong/sets/in-the-groove'">
+        <div class="p2 bg-darken-1">
+          <div class="table">
+            <h3 class="table-cell full-width m0">{{ user.username }}</h3>
+             <small class="monospace h6 table-cell nowrap">{{ currentTime | prettyTime }} - {{ duration | prettyTime }}</small>
+          </div>
+          <h1 class="m0">{{ title }}</h1>
+          <div class="table">
+            <div class="table-cell">
+              <button class="button-icon" v-on="click: previous()">
+                <svg v-plangular-icon="'previous'"></svg>
+              </button>
+            </div>
+            <div class="table-cell">
+              <button class="h2 button-icon" v-on="click: playPause(player.playlistIndex)">
+                <svg v-if="player.tracks[player.i] != track || !player.playing" v-plangular-icon="'play'"></svg>
+                <svg v-if="player.tracks[player.i] == track && player.playing" v-plangular-icon="'pause'"></svg>
+              </button>
+            </div>
+            <div class="table-cell">
+              <button class="button-icon" v-on="click: next()">
+                <svg v-plangular-icon="'next'"></svg>
+              </button>
+            </div>
+            <div class="table-cell full-width ">
+              <div class="px1">
+               <progress class="" v-on="click: seek($event)" value="{{ currentTime / duration || 0 }}">{{ currentTime / duration }}</progress>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scrollbar"  id="style-1">
+          <div v-repeat="t : tracks" >
+            <a href="#{{ t.title }}" class="block px2 py1 nav-item"
+            v-on="click: playPause($index)"
+            v-class="player.currentTrack == t ? 'bg-darken-3' : ''">
+            <span class="mr1">{{ $index }}.</span>
+            {{ t.user.username }} - {{ t.title }}
+            </a>
+          </div>
+          <div class="force-overflow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="px2 py4 bg-darken-3">
+    <div class="container">
+      <nav class="mb1">
+        <a href="." class="nav-item py1 mr1">Home</a>
+        <a href="docs/vuejs" class="nav-item py1 mr1 red">Examples</a>
+        <a href="http://github.com/jxnblk/plangular" class="nav-item py1">Github</a>
+      </nav>
+      <p class="h6 m0">Made with love by <a href="http://jxnblk.com">Jxnblk</a>.</p>
+    </div>
+  </footer>
+
+ <script> var vm = new Vue({ el: '#vm' }) </script>
+</body>
+</html>
